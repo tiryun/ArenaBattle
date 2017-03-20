@@ -5,4 +5,9 @@
 
 
 
+void UABGameInstance::Init()
+{
+	Super::Init();
+	UE_LOG(LogClass, Warning, TEXT("%s"), TEXT("AB Game Instance Init!"));
+}
 
