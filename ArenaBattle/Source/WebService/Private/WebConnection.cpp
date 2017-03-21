@@ -5,4 +5,14 @@
 
 
 
+UWebConnection::UWebConnection()
+{
+	UE_LOG(LogClass, Warning, TEXT("WebConnection Constructor!"));
+	Host = TEXT("localhost:8000");
+	URI = TEXT("/");
+}
 
+void UWebConnection::RequestToken()
+{
+	UE_LOG(LogClass, Warning, TEXT("Request Token Call!"));
+}

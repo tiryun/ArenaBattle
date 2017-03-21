@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Engine/GameInstance.h"
+#include "WebConnection.h" 
 #include "ABGameInstance.generated.h"
 
 /**
@@ -14,5 +15,13 @@ class ARENABATTLE_API UABGameInstance : public UGameInstance
 	GENERATED_BODY()
 
 public:
+	UABGameInstance();
+
 	virtual void Init() override;
+
+	UPROPERTY()
+		class UWebConnection* WebConnect;
+
+	UPROPERTY()
+		class UWebConnection* WebConnect2;
 };

@@ -12,8 +12,16 @@ UCLASS()
 class WEBSERVICE_API UWebConnection : public UObject
 {
 	GENERATED_BODY()
-	
-	
-	
-	
+
+public:
+	UWebConnection();
+
+	UPROPERTY()
+		FString Host;
+
+	UPROPERTY()
+		FString URI;
+
+	UFUNCTION()
+		void RequestToken();
 };
