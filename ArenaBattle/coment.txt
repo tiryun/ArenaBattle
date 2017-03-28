@@ -1,0 +1,18 @@
+언리얼 헤더 툴 -> 언리얼 오브젝트(CDO)와 메타파일(UCLASS) 판단 -> 폴더 안의 .cpp .h 탐색 -> 이를 결합할 프로젝트, 솔루션 생성 -> 이 소스들 사이의 컴파일 순서 등을 UBT에서 컨트롤
+
+모듈들, Core(언리얼 가상머신 위에서 동작 C++ -> C#...) CoreUObejct(액터 게임오브젝트 등) Engine... 
+
+C++을 컴파일하면 .obj, .lib(.obj 결합 (언리얼 오브젝트)) / .dll(.lib를 뽑아냄 -> editor 빌드에서만 됨, 에디터에서 모듈 결과물을 불러오기 위해) / .exe(Game 빌드시에만 생성, .lib의 기능을 전부 포함) -> 이것들을 전부 UBT에서 해준다는 것!
+
+모듈로딩 먼저, 모듈로딩 안에서 오브젝트 로딩 및 CDO 생성 되고, 그 이후 에디터 로딩
+
+활성화 모듈
+
+UEngine(UGameEngine / UEngineEditor)
+GmaeInstance - 
+World - Level(월드 아웃라이너로 보여질 월드에 배치될 액터모음) (퍼시스던트 레벨이 가장 기본(하늘, 디렉셔널, 플로어...))
+
+Actor - RootComponent
+
+
+리포트

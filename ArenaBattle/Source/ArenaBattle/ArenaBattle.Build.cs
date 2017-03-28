@@ -6,7 +6,7 @@ public class ArenaBattle : ModuleRules
 {
 	public ArenaBattle(TargetInfo Target)
 	{
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "WebService" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "WebService" }); //WebService를 쓰겠다라고 표시, 이렇게 하면 UBT에서 자동으로 WebService모듈을 ArenaBattle모듈보다 먼저 로딩 
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
