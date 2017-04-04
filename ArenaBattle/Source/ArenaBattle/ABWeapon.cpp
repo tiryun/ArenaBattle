@@ -12,7 +12,7 @@ AABWeapon::AABWeapon() //프로젝트 실행 시 CDO 생성
 	Weapon = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponHash")); //권장
 	RootComponent = Weapon;
 
-	ConstructorHelpers::FObjectFinder<USkeletalMesh> SK_Weapon(TEXT("SkeletalMesh'/Game/InfinityBladeWeapons/Weapons/Blade/Silly_Weapons/Blade_Balloon/SK_Blade_Balloon.SK_Blade_Balloon'"));
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SK_Weapon(TEXT("SkeletalMesh'/Game/InfinityBladeWeapons/Weapons/Blade/Silly_Weapons/Blade_Balloon/SK_Blade_Balloon.SK_Blade_Balloon'"));
 	Weapon->SetSkeletalMesh(SK_Weapon.Object);
 }
 
