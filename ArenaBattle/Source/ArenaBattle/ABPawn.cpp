@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "ArenaBattle.h"
+#include "ABGameInstance.h"
 #include "ABPawn.h"
 
 
@@ -27,6 +28,9 @@ AABPawn::AABPawn()
 	Mesh->SetRelativeLocationAndRotation (FVector(0.0f, 0.0f, -90.0f), FRotator(0.0f, -90.0f, 0.0f));
 
 	Cam->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, 0.0f), FRotator(-20.0f, 0.0f, 0.0f));
+
+
+	MaxHP = 100.0f;
 }
 
 // Called when the game starts or when spawned
@@ -34,6 +38,18 @@ void AABPawn::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	CurrentHP = MaxHP;
+
+	int32 NewIndex = FMath::RandRange(0, CharacterAssets.Num() - 1);
+	UABGameInstance* ABGameInstance = Cast<UABGameInstance>(GetGameInstance());
+	if (ABGameInstance)
+	{
+		TAssetPtr<USkeletalMesh> NewCharacter = Cast<USkeletalMesh>(ABGameInstance->AssetLoader.SynchronousLoad(CharacterAssets[NewIndex]));
+		if (NewCharacter)
+		{
+			Mesh->SetSkeletalMesh(NewCharacter.Get());
+		}
+	}
 }
 
 // Called every frame

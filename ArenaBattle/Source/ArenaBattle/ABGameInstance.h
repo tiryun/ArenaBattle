@@ -6,6 +6,14 @@
 #include "WebConnection.h" 
 #include "ABGameInstance.generated.h"
 
+
+class FHouse
+{
+public:
+	TSharedPtr<FHouse> OthersDeed;
+	TWeakPtr<FHouse> AccessHouse;
+	int32 Size = 10;
+};
 /**
  * 
  */
@@ -22,6 +30,14 @@ public:
 	UPROPERTY()
 		class UWebConnection* WebConnect;
 
-	UPROPERTY()
+	//UPROPERTY()
 		class UWebConnection* WebConnect2;
+		
+	FTimerHandle ObjectCheckTimer;
+
+	UFUNCTION()
+		void CheckUObjectAlive();
+
+	UPROPERTY()
+		FStreamableManager AssetLoader;
 };

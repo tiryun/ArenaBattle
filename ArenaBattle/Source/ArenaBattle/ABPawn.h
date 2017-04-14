@@ -5,7 +5,7 @@
 #include "GameFramework/Pawn.h"
 #include "ABPawn.generated.h"
 
-UCLASS()
+UCLASS(config = Game)
 class ARENABATTLE_API AABPawn : public APawn
 {
 	GENERATED_BODY()
@@ -33,6 +33,19 @@ public:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Charactor")
 	class UFloatingPawnMovement* Movement;
 
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Charactor")
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Charactor") 
 	class UCameraComponent* Cam;
+
+	//디폴트 오브젝트에서만 에디트 EditDefaultsOnly 또는 인스턴스마다 따로 에디트 EditInstanceOnly 등의 설정이 있다
+	UPROPERTY(config, BlueprintReadWrite, EditAnywhere, Category = "Stat")
+		float MaxHP;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Stat")
+		float CurrentHP;
+
+
+	public:
+	UPROPERTY(config, BlueprintReadOnly, VisibleInstanceOnly, Category = "Asset")
+		TArray<FStringAssetReference> CharacterAssets;
+
 };
