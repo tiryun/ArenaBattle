@@ -13,6 +13,11 @@ public:
 	TSharedPtr<FHouse> OthersDeed;
 	TWeakPtr<FHouse> AccessHouse;
 	int32 Size = 10;
+
+	void RequestTokenComplete(const FString& Token)
+	{
+		UE_LOG(LogClass, Warning, TEXT("Test"));
+	}
 };
 /**
  * 
@@ -31,7 +36,7 @@ public:
 		class UWebConnection* WebConnect;
 
 	//UPROPERTY()
-		class UWebConnection* WebConnect2;
+		//class UWebConnection* WebConnect2;
 		
 	FTimerHandle ObjectCheckTimer;
 
@@ -40,4 +45,10 @@ public:
 
 	UPROPERTY()
 		FStreamableManager AssetLoader;
+
+	UFUNCTION() //이건 사실 굳이 필요는 없다
+		void RequestTokenComplete(const FString& Token);
+
+	UFUNCTION() //이건 사실 굳이 필요는 없다
+		void RequestTokenComplete2(const FString& Token);
 };

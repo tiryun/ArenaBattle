@@ -33,7 +33,10 @@ public:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Charactor")
 	class UFloatingPawnMovement* Movement;
 
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Charactor") 
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "SpringArm")
+	class USpringArmComponent* SpringArm;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Camera") 
 	class UCameraComponent* Cam;
 
 	//디폴트 오브젝트에서만 에디트 EditDefaultsOnly 또는 인스턴스마다 따로 에디트 EditInstanceOnly 등의 설정이 있다
@@ -44,8 +47,19 @@ public:
 		float CurrentHP;
 
 
-	public:
+public:
 	UPROPERTY(config, BlueprintReadOnly, VisibleInstanceOnly, Category = "Asset")
 		TArray<FStringAssetReference> CharacterAssets;
+
+
+private:
+	float CurrentLeftRightVal;
+	float CurrentUpDownVal;
+
+	UFUNCTION()
+		void UpDownInput(float NewInputVal);
+
+	UFUNCTION()
+		void LeftRightInput(float NewInputval);
 
 };

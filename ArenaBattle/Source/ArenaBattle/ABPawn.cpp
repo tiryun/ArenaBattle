@@ -2,6 +2,7 @@
 
 #include "ArenaBattle.h"
 #include "ABGameInstance.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "ABPawn.h"
 
 
@@ -16,7 +17,12 @@ AABPawn::AABPawn()
 
 	Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
 	Movement = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("Movement"));
+
+	SpringArm = CreateDefaultSubobject<USpringArmComponent>("SpringArm");
+	SpringArm->SetupAttachment(Body);
+
 	Cam = CreateDefaultSubobject<UCameraComponent>(TEXT("Cam"));
+	Cam->SetupAttachment(SpringArm);
 
 	Body->SetCapsuleHalfHeight(90.0f);
 	Body->SetCapsuleRadius(36.0f);
@@ -27,11 +33,19 @@ AABPawn::AABPawn()
 	Mesh->SetSkeletalMesh(SK_Mesh.Object);
 	Mesh->SetRelativeLocationAndRotation (FVector(0.0f, 0.0f, -90.0f), FRotator(0.0f, -90.0f, 0.0f));
 
-	Cam->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, 0.0f), FRotator(-20.0f, 0.0f, 0.0f));
+	//Cam->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, 0.0f), FRotator(-20.0f, 0.0f, 0.0f));
 
+	SpringArm->SetRelativeRotation(FRotator(-45.0f, 0.0f, 0.0f));
+	SpringArm->TargetArmLength = 650.0f;
+	SpringArm->bInheritPitch = false;
+	SpringArm->bInheritYaw = false;
+	SpringArm->bInheritRoll = false;
 
 	MaxHP = 100.0f;
+
+	AutoPossessPlayer = EAutoReceiveInput::Player0;
 }
+
 
 // Called when the game starts or when spawned
 void AABPawn::BeginPlay()
@@ -50,6 +64,7 @@ void AABPawn::BeginPlay()
 			Mesh->SetSkeletalMesh(NewCharacter.Get());
 		}
 	}
+	AB_LOG(Warning, TEXT("BeginPlay Call"));
 }
 
 // Called every frame
@@ -57,6 +72,13 @@ void AABPawn::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 
+	FVector InputVector = FVector(CurrentUpDownVal, CurrentLeftRightVal, 0.0F); //x에는 위아래 y에는 양옆 
+	if (InputVector.SizeSquared() > 0.0F)
+	{
+		FRotator TargetRotation = UKismetMathLibrary::MakeRotFromX(InputVector);
+		SetActorRotation(TargetRotation);
+		AddMovementInput(GetActorForwardVector());
+	}
 }
 
 // Called to bind functionality to input
@@ -64,5 +86,19 @@ void AABPawn::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 {
 	Super::SetupPlayerInputComponent(InputComponent);
 
+
+	InputComponent->BindAxis("LeftRight", this, &AABPawn::LeftRightInput);
+	InputComponent->BindAxis("UpDown", this, &AABPawn::UpDownInput);
+}
+
+
+void AABPawn::LeftRightInput(float NewInputVal)
+{
+	CurrentLeftRightVal = NewInputVal;
+}
+
+void AABPawn::UpDownInput(float NewInputVal)
+{
+	CurrentUpDownVal = NewInputVal;
 }
 
